@@ -1,4 +1,12 @@
 
+        function toggleNav() {
+            document.getElementById('nav-links').classList.toggle('open');
+        }
+
+        function closeNav() {
+            document.getElementById('nav-links').classList.remove('open');
+        }
+
         function enterSite() {
             document.getElementById('whatsapp-entry').style.display = 'none';
             document.getElementById('main-site').style.display = 'block';

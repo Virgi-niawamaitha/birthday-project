@@ -32,24 +32,27 @@
   <!-- Main Website -->
   <div id="main-site" style="display: none;">
    <nav>
-    <ul>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+     ☰
+    </button>
+    <ul id="nav-links">
      <li>
-      <a href="#" onclick="showPage('dashboard')">
+      <a href="#" onclick="showPage('dashboard'); closeNav();">
        Home
       </a>
      </li>
      <li>
-      <a href="#" onclick="showPage('memories')">
+      <a href="#" onclick="showPage('memories'); closeNav();">
        Our Memories 💕
       </a>
      </li>
      <li>
-      <a href="#" onclick="showPage('cake')">
+      <a href="#" onclick="showPage('cake'); closeNav();">
        Make a Wish 🎂
       </a>
      </li>
      <li>
-      <a href="#" onclick="showPage('encouragement')">
+      <a href="#" onclick="showPage('encouragement'); closeNav();">
        Words for You 💌
       </a>
      </li>
