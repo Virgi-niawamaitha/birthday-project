@@ -48,9 +48,9 @@
             }, 600);
         }
 
-        function submitWishes(event) {
+        async function submitWishes(event) {
             event.preventDefault();
-            
+
             const formData = new FormData(event.target);
             const wishes = {
                 gift: formData.get('gift'),
@@ -58,38 +58,36 @@
                 secret: formData.get('secret'),
                 bucket_list: formData.get('bucket_list')
             };
-            
-            // Create email body
-            const emailBody = `
-Birthday Wishes from Your Love 💕
 
-🎁 BIRTHDAY GIFT WISH:
-${wishes.gift}
+            const submitBtn = event.target.querySelector('.submit-btn');
+            submitBtn.textContent = '💌 Sending...';
+            submitBtn.disabled = true;
 
-💕 WISH FROM GIRLFRIEND:
-${wishes.girlfriend_wish}
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    access_key: 'ec4ebe39-d5aa-4cae-8f21-85ffeff61a69',
+                    subject: '🎂 Birthday Wishes from Your Love 💕',
+                    from_name: 'Birthday Surprise Website',
+                    to: 'wamaithavirginia53@gmail.com',
+                    message: `Birthday Wishes from Your Love 💕\n\n🎁 BIRTHDAY GIFT WISH:\n${wishes.gift}\n\n💕 WISH FROM GIRLFRIEND:\n${wishes.girlfriend_wish}\n\n🤫 SECRET TO SHARE:\n${wishes.secret}\n\n🌟 BUCKET LIST (Things to do together):\n${wishes.bucket_list}\n\n---\nSent with love on his birthday! 🎂`
+                })
+            });
 
-🤫 SECRET TO SHARE:
-${wishes.secret}
+            const result = await response.json();
 
-🌟 BUCKET LIST (Things to do together):
-${wishes.bucket_list}
-
----
-Sent with love on his birthday! 🎂
-            `;
-            
-            // Create mailto link
-            const mailtoLink = `mailto:your-email@example.com?subject=Birthday Wishes from My Love 🎂💕&body=${encodeURIComponent(emailBody)}`;
-            
-            // Open email client
-            window.location.href = mailtoLink;
-            
-            // Show confirmation
-            alert('🎉 Your wishes are being sent! Check your email client. Thank you for sharing your heart with me! 💕');
-            
-            // Optional: Reset form
-            event.target.reset();
+            if (result.success) {
+                submitBtn.textContent = '✅ Wishes Sent!';
+                event.target.reset();
+                setTimeout(() => {
+                    showPage('encouragement');
+                }, 1500);
+            } else {
+                submitBtn.textContent = '✨ Submit My Wishes ✨';
+                submitBtn.disabled = false;
+                alert('Something went wrong. Please try again 💕');
+            }
         }
     
 
